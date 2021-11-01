@@ -216,3 +216,12 @@ a.button:hover, .resetButton:hover {
     color: white;
   }
 
+/* Salary */
+.salary-group {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .Salary-output-range {
+    color: #42515f;
+  }

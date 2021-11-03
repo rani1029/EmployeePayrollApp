@@ -37,6 +37,10 @@ function validateDate() {
 const save = () => {
     try {
         let employeePayrollData = createEmployeePayroll();
+        /*Uc 4*/
+        if (employeePayrollData != null) {
+            createAndUpdateStorage(employeePayrollData);
+        }
     }
     catch (ex) {
         return;
@@ -84,9 +88,51 @@ const getInputElementValue = (id) => {
     let value = document.getElementById(id).value;
     return value;
 }
-
+/*Uc storing in local storage*/
+function createAndUpdateStorage(employeePayrollData) {
+    let employeePayrollList = JSON.parse(localStorage.getItem("EmployeePayrollList2"));/*Json parse used to convert json to object format */
+    if (employeePayrollList != undefined) {
+        employeePayrollList.push(employeePayrollData);
+    }
+    else {
+        employeePayrollList = [employeePayrollData];
+    }
+    alert(employeePayrollList.toString());
+    localStorage.setItem("EmployeePayrollList2", JSON.stringify(employeePayrollList));/* json.stringify used to convert object to json */
+}
 window.addEventListener('DOMContentLoaded', () => {
     salaryOutput();
     validateName();
     validateDate();
 })
+/*Uc-5 reset  */
+const resetForm = () => {
+    setValue('#name', '');
+    unsetSelectedValues('[name=profile]');
+    unsetSelectedValues('[name=gender]');
+    unsetSelectedValues('[name=department]');
+    setValue('#salary', '');
+    setValueByClassName('.salary-output', '400000');
+    setValue('#notes', '');
+    setValue('#day', '1');
+    setValue('#month', 'January');
+    setValue('#year', '2021');
+    setValueByClassName('.text-error', '');
+}
+
+const setValue = (id, value) => {
+    const element = document.querySelector(id);
+    element.value = value;
+}
+
+const setValueByClassName = (id, value) => {
+    const element = document.querySelector(id);
+    element.textContent = value;
+}
+
+const unsetSelectedValues = (property) => {
+    let allItems = document.querySelectorAll(property);
+    allItems.forEach(item => {
+        item.checked = false;
+    });
+}
